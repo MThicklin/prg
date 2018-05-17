@@ -2,7 +2,7 @@
 var mainState = {
 preload: function() { 
     // Load the bird sprite
-    //game.laod.image(asset name, asset location)
+    //game.load.image(asset name, asset location)
     game.load.image('bird', 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/349822/bird.png'); 
 },
 
