@@ -37,7 +37,7 @@ create: function() {
 update: function() {
     // If the bird is out of the screen (too high or too low)
     // Call the 'restartGame' function
-    game.physics.arcade.overlap(this.bird, this.pipe, this.restartGame, null, this);
+    game.physics.arcade.overlap(this.bird, this.pipes, this.restartGame, null, this);
     if (this.bird.angle < 20)
         this.bird.angle += 1;
     if (this.bird.y < 0 || this.bird.y > 490)
