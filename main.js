@@ -42,7 +42,7 @@ update: function() {
     },
     
     restartGame: function() {
-    game.start.start('main');
+    game.state.start('main');
     },
 };
 
