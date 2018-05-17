@@ -53,8 +53,8 @@ addOnePipe: function(x, y){
     game.physics.arcade.enable(pipe);
     pipe.body.velocity.x=-200;
     pipe.checkWorldBOunds = true;
-    pipe.outOfBoundsKill=
-}
+    pipe.outOfBoundsKill= true;
+},
 };
 
 // Initialize Phaser, and create a 400px by 490px game
