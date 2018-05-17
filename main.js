@@ -37,7 +37,7 @@ create: function() {
 update: function() {
     // If the bird is out of the screen (too high or too low)
     // Call the 'restartGame' function
-    game.physics.arcade.overlap(this.bird, this.pipe, this.hitPipe, null, this);
+    game.physics.arcade.overlap(this.bird, this.pipe, this.restartGame, null, this);
     if (this.bird.angle < 20)
         this.bird.angle += 1;
     if (this.bird.y < 0 || this.bird.y > 490)
@@ -110,7 +110,7 @@ hitPipe: function() {
 };
 
 // Initialize Phaser, and create a 400px by 490px game
-var game = new Phaser.Game(400, 490);
+var game = new Phaser.Game(600, 800);
 
 // Add the 'mainState' and call it 'main'
 game.state.add('main', mainState); 
