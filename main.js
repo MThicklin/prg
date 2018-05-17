@@ -4,20 +4,17 @@ preload: function() {
     // Load the bird sprite
     //game.load.image(asset name, asset location)
     game.load.image('bird', 'assets/bird.png'); 
+    game.load.image('pipe', 'assets/pipe.png')
 },
 
 create: function() { 
     // Change the background color of the game to blue
     game.stage.backgroundColor = '#71c5cf';
-
-    // Set the physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    // Display the bird at the position x=100 and y=245
     //Syntax : game.add.sprite(X,Y,Asset name from preload)
     this.bird = game.add.sprite(100, 245, 'bird');
 
-    // Add physics to the bird
     // Needed for: movements, gravity, collisions, etc.
     game.physics.arcade.enable(this.bird);
 
@@ -25,9 +22,10 @@ create: function() {
     this.bird.body.gravity.y = 1000;  
 
     // Call the 'jump' function when the spacekey is hit
-    var spaceKey = game.input.keyboard.addKey(
-                    Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(this.jump, this);     
+    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.add(this.jump, this);
+
+    this.pipes = game.add.group();
 },
 
 update: function() {
@@ -37,13 +35,26 @@ update: function() {
         this.restartGame();
 },
     
-    jump: function() {
+jump: function() {
     this.bird.body.velocity.y=-350;
     },
     
-    restartGame: function() {
+restartGame: function() {
     game.state.start('main');
     },
+
+addOnePipe: function(x, y){
+    var pipe = game.add.sprite(x, y, 'pipe');
+    //pipes is the name of the group we called earlier in create().
+    //We make a pipe var a line before, then we put the pipe in the pipes group.
+    this.pipes.add(pipe);
+
+    //Pipe var also gets arcade physics
+    game.physics.arcade.enable(pipe);
+    pipe.body.velocity.x=-200;
+    pipe.checkWorldBOunds = true;
+    pipe.outOfBoundsKill=
+}
 };
 
 // Initialize Phaser, and create a 400px by 490px game
