@@ -40,7 +40,7 @@ update: function() {
     game.physics.arcade.overlap(this.bird, this.pipes, this.restartGame, null, this);
     if (this.bird.angle < 20)
         this.bird.angle += 1;
-    if (this.bird.y < 0 || this.bird.y > 490)
+    if (this.bird.y < -500 || this.bird.y > 800)
         this.restartGame();
 },
     
