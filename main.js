@@ -52,7 +52,7 @@ addOnePipe: function(x, y){
     //Pipe var also gets arcade physics
     game.physics.arcade.enable(pipe);
     pipe.body.velocity.x=-200;
-    pipe.checkWorldBOunds = true;
+    pipe.checkWorldBounds = true;
     pipe.outOfBoundsKill= true;
 },
 };
