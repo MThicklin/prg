@@ -30,12 +30,14 @@ create: function() {
 
     this.score=0;
     this.labelScore=game.add.text(20,20,"0", {font: "30px Arial", fill:"#ffffff"});
+
+    this.bird.anchor.setTo(-0.2, 0.5);
 },
 
 update: function() {
     // If the bird is out of the screen (too high or too low)
     // Call the 'restartGame' function
-    game.physics.arcade.overlap(this.bird, this.pipe, this.restartGame, null, this);
+    game.physics.arcade.overlap(this.bird, this.pipe, this.hitPipe, null, this);
     if (this.bird.angle < 20)
         this.bird.angle += 1;
     if (this.bird.y < 0 || this.bird.y > 490)
@@ -43,6 +45,9 @@ update: function() {
 },
     
 jump: function() {
+    if (this.bird.alive == false)
+    return;
+
     this.bird.body.velocity.y=-350;
     // Create an animation on the bird
     var animation = game.add.tween(this.bird);
@@ -83,6 +88,24 @@ addRowOfPipes: function() {
             this.addOnePipe(400, i * 60 + 10);
             this.score+=1;
             this.labelScore.text=this.score;   
+},
+
+hitPipe: function() {
+    // If the bird has already hit a pipe, do nothing
+    // It means the bird is already falling off the screen
+    if (this.bird.alive == false)
+        return;
+
+    // Set the alive property of the bird to false
+    this.bird.alive = false;
+
+    // Prevent new pipes from appearing
+    game.time.events.remove(this.timer);
+
+    // Go through all the pipes, and stop their movement
+    this.pipes.forEach(function(p){
+        p.body.velocity.x = 0;
+    }, this);
 },
 };
 
