@@ -13,13 +13,14 @@ create: function() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //Syntax : game.add.sprite(X,Y,Asset name from preload)
-    this.bird = game.add.sprite(100, 245, 'bird');
+    this.bird = game.add.sprite(400, 400, 'bird');
 
     // Needed for: movements, gravity, collisions, etc.
     game.physics.arcade.enable(this.bird);
 
     // Add gravity to the bird to make it fall
-    this.bird.body.gravity.y = 1000;  
+    //commented out for test, also line 58.
+    //this.bird.body.gravity.y = 1000;  
 
     // Call the 'jump' function when the spacekey is hit
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -40,20 +41,23 @@ update: function() {
     game.physics.arcade.overlap(this.bird, this.pipes, this.restartGame, null, this);
     if (this.bird.angle < 20)
         this.bird.angle += 1;
-    if (this.bird.y < -500 || this.bird.y > 800)
+    if (this.bird.x < -800 || this.bird.x > 800)
         this.restartGame();
+
 },
-    
+
+
 jump: function() {
     if (this.bird.alive == false)
     return;
 
-    this.bird.body.velocity.y=-350;
-    // Create an animation on the bird
-    var animation = game.add.tween(this.bird);
-
-    // Change the angle of the bird to -20° in 100 milliseconds
-    animation.to({angle: -20}, 100);
+     this.bird.body.velocity.x=10;
+     
+     //Create an animation on the bird
+     var animation = game.add.tween(this.bird);
+     
+     //Change the angle of the bird to -20° in 100 milliseconds
+     animation.to({angle: -20}, 100);
 
     // And start the animation
     animation.start(); 
@@ -71,7 +75,7 @@ addOnePipe: function(x, y){
 
     //Pipe var also gets arcade physics
     game.physics.arcade.enable(pipe);
-    pipe.body.velocity.x=-200;
+    pipe.body.velocity.y=-200;
     pipe.checkWorldBounds = true;
     pipe.outOfBoundsKill= true;
 },
@@ -85,7 +89,7 @@ addRowOfPipes: function() {
     // With one big hole at position 'hole' and 'hole + 1'
     for (var i = 0; i < 8; i++)
         if (i != hole && i != hole + 1) 
-            this.addOnePipe(400, i * 60 + 10);
+            this.addOnePipe(i * 60 + 10, 400);
             this.score+=1;
             this.labelScore.text=this.score;   
 },
@@ -104,13 +108,19 @@ hitPipe: function() {
 
     // Go through all the pipes, and stop their movement
     this.pipes.forEach(function(p){
-        p.body.velocity.x = 0;
+        p.body.velocity.y = 0;
     }, this);
 },
+
+ render: function() {
+
+    game.debug.cameraInfo(game.camera, 32, 500);
+},
+
 };
 
 // Initialize Phaser, and create a 400px by 490px game
-var game = new Phaser.Game(600, 800);
+var game = new Phaser.Game(800, 800);
 
 // Add the 'mainState' and call it 'main'
 game.state.add('main', mainState); 
